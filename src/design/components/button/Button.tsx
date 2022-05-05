@@ -1,19 +1,25 @@
 import styled from "styled-components";
-import * as ds from "design";
 
 export interface ButtonProps {
   children: string;
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  width?: string;
+  height?: string;
 }
 
-export function Button({ children, onClick }: ButtonProps) {
-  return <ButtonWrapper onClick={onClick}>{children}</ButtonWrapper>;
+export function Button({ children, onClick, width, height }: ButtonProps) {
+  return (
+    <ButtonWrapper onClick={onClick} setWidth={width} setHeight={height}>
+      {children}
+    </ButtonWrapper>
+  );
 }
 
-const ButtonWrapper = styled.button`
-  width: 100px;
-  height: 40px;
-  background-color: ${ds.colors.secondaryBrand.hexColor};
+const ButtonWrapper = styled.button<{ setWidth?: string; setHeight?: string }>`
+  width: ${(props) => (props.setWidth === undefined ? "100%" : props.setWidth)};
+  height: ${(props) =>
+    props.setHeight === undefined ? "40px" : props.setHeight};
+  background-color: #ed1b76;
   cursor: pointer;
 
   border: none;

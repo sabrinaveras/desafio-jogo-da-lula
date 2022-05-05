@@ -1,5 +1,5 @@
-import * as ds from "design";
 import styled from "styled-components";
+import * as ds from "design";
 
 import { useNavigate } from "react-router-dom";
 
@@ -15,7 +15,10 @@ export const HomePage = () => {
       <LogoWrapper>
         <ds.icons.SquidGameLogo />
       </LogoWrapper>
-      <ds.components.button.Button onClick={() => handleOnClick()}>
+      <ds.components.button.Button
+        onClick={() => handleOnClick()}
+        width="120px"
+      >
         Começar
       </ds.components.button.Button>
     </HomePageWrapper>
@@ -29,7 +32,7 @@ const LogoWrapper = styled.div`
 const HomePageWrapper = styled.div`
   width: 100%;
   height: 100vh;
-  background-color: ${ds.colors.primaryBrand.hexColor};
+  background-color: #282c34;
 
   display: flex;
   flex-direction: column;
