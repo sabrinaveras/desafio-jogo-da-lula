@@ -3,6 +3,7 @@ import * as ds from "design";
 
 import { Player } from "domain/Player";
 import { PlayerList } from "domain/Player/components/PlayerList";
+import { moneyMask } from "services/moneyMask";
 
 export interface GamePageProps {
   remainingPlayers: Player[];
@@ -66,15 +67,11 @@ function CurrentGameInfo({
   votesToEndGame: number;
   newRound: () => void;
 }) {
+  const totalAmount = Number((420000 * eliminatePlayers.length).toFixed(2));
+
   return (
     <CurrentGameInfoWrapper>
-      <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-        <RoundWrapper>Round: {round}</RoundWrapper>
-
-        <AmountWrapper>
-          Fundo do Prêmio: {420 * eliminatePlayers.length}
-        </AmountWrapper>
-      </div>
+      <InfoRoundAndAward round={round} totalAmount={totalAmount} />
 
       <div style={{ margin: "24px 0px" }}>
         <ds.icons.SoldierSquare />
@@ -104,22 +101,23 @@ function EndGameInfo({
   votesToEndGame: number;
   newGame: () => void;
 }) {
-  const totalAmount = 420 * eliminatePlayers.length;
-  const prizePerParticipant = totalAmount / remainingPlayers.length;
+  const totalAmount = Number((420000 * eliminatePlayers.length).toFixed(2));
+  const prizePerParticipant = Number(
+    (totalAmount / remainingPlayers.length).toFixed(2)
+  );
 
   return (
     <CurrentGameInfoWrapper>
-      <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-        <RoundWrapper>Round: {round}</RoundWrapper>
-
-        <AmountWrapper>Fundo do Prêmio: {totalAmount}</AmountWrapper>
-      </div>
+      <InfoRoundAndAward round={round} totalAmount={totalAmount} />
 
       <FinalResults>
         <div>Total de Jogadores Remanescentes: {remainingPlayers.length}</div>
         <div>Total de Jogadores Eliminados: {eliminatePlayers.length}</div>
         <div>Votos para o fim do jogo: {votesToEndGame}</div>
-        <div>Prêmio par aos jogadores remanescentes: {prizePerParticipant}</div>
+        <div>
+          Prêmio par aos jogadores remanescentes:
+          {moneyMask(prizePerParticipant)}
+        </div>
       </FinalResults>
 
       <div style={{ margin: "24px 0px" }}>
@@ -136,6 +134,31 @@ function EndGameInfo({
     </CurrentGameInfoWrapper>
   );
 }
+
+function InfoRoundAndAward({
+  round,
+  totalAmount,
+}: {
+  round: number;
+  totalAmount: number;
+}) {
+  return (
+    <InfoRoundAndAwardWrapper>
+      <RoundWrapper>Round: {round}</RoundWrapper>
+
+      <AmountWrapper>
+        Fundo do Prêmio:
+        {moneyMask(totalAmount)}
+      </AmountWrapper>
+    </InfoRoundAndAwardWrapper>
+  );
+}
+
+const InfoRoundAndAwardWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
 
 const FinalResults = styled.div`
   display: flex;
