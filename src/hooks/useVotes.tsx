@@ -2,10 +2,10 @@ import React from "react";
 import { Player } from "domain/Player";
 
 export function useVotes(players: Player[]) {
-  const [votesEndGame, setVotesEndGame] = React.useState<number>(0);
+  const [votesToEndGame, setVotesToEndGame] = React.useState<number>(0);
 
   function clearVotes() {
-    setVotesEndGame(0);
+    setVotesToEndGame(0);
   }
 
   const calcVotes = React.useCallback(async (players: Player[]) => {
@@ -20,12 +20,12 @@ export function useVotes(players: Player[]) {
       return undefined;
     });
 
-    setVotesEndGame(count.length);
+    setVotesToEndGame(count.length);
   }, []);
 
   React.useEffect(() => {
     calcVotes(players);
   }, [calcVotes]);
 
-  return { votesEndGame, clearVotes, calcVotes };
+  return { votesToEndGame, clearVotes, calcVotes };
 }

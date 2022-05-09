@@ -70,4 +70,9 @@ const PlayerListTitleWrapper = styled.h3`
   color: #ffffff;
 `;
 
-const PlayerListWrapper = styled.div``;
+const PlayerListWrapper = styled.div`
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  flex-direction: column;
+`;
