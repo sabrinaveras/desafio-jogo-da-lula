@@ -3,7 +3,7 @@ import * as ds from "design";
 
 import { useNavigate } from "react-router-dom";
 
-export const HomePage = () => {
+export const Home = () => {
   const navigate = useNavigate();
 
   function handleOnClick() {
